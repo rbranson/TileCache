@@ -12,8 +12,16 @@ Example Configuration::
   type=Disk
   base=/var/lib/tilecache
   umask=002
+  sendfile=yes
+  expire=3600
 
 Dependencies: None
+
+The sendfile=yes option instructs TileCache to send an X-SendFile header to
+the web server rather than the contents of the image.
+
+See http://blog.lighttpd.net/articles/2006/07/02/x-sendfile and
+http://tn123.ath.cx/mod_xsendfile/
 
 GoogleDisk
 ----
@@ -84,3 +92,28 @@ file on your PYTHONPATH/sys.path. The source distribution of TileCache
 includes this file in the TileCache/Caches/S3.py file. (Packagers are
 encouraged to remove this file from distributions and instead depend
 on the boto library described above.)
+
+MBTiles
+-------
+
+Simple read-only format for MBTiles sqlite databases. Name each database
+according to the name of the layer, and place it inside your cache directory,
+and provide an extension to your cache.
+
+    [cache]
+    type=MBTiles
+    base=./tiles
+    ext=db
+
+For layer basic, this will attempt to open a sqlite3 database at 
+./tiles/basic.db .
+
+See http://mapbox.com/tools/mbtiles for more details.
+
+All Caches
+----------
+
+All Caches support the expire option.
+
+The expire=n option instructs TileCache to send an Expires header, with the
+date set 'n' seconds into the future.

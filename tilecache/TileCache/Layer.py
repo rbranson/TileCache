@@ -1,4 +1,4 @@
-# BSD Licensed, Copyright (c) 2006-2008 MetaCarta, Inc.
+# BSD Licensed, Copyright (c) 2006-2010 TileCache Contributors
 
 import os, sys
 from warnings import warn
@@ -99,6 +99,7 @@ class Layer (object):
                   "cache", "debug", "description", 
                   "watermarkimage", "watermarkopacity",
                   "extent_type", "tms_type", "units", "mime_type",
+                  "paletted",
                   "spherical_mercator", "metadata")
     
     config_properties = [
@@ -351,7 +352,7 @@ class Layer (object):
         # To be implemented by subclasses
         pass 
 
-    def render (self, tile):
+    def render (self, tile, **kwargs):
         return self.renderTile(tile)
 
 class MetaLayer (Layer):
